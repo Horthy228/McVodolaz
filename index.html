@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCVODOLAZZZ · worldwide · билеты</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #03050a 0%, #0e1a28 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Более тёмные, глубокие градиенты */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(40, 180, 240, 0.12) 0%, transparent 55%),
+                        radial-gradient(circle at 80% 70%, rgba(60, 140, 220, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 85%, rgba(20, 160, 230, 0.08) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card {
+            background: rgba(6, 12, 22, 0.8);
+            backdrop-filter: blur(18px) saturate(200%);
+            -webkit-backdrop-filter: blur(18px) saturate(200%);
+            border-radius: 56px;
+            border: 1px solid rgba(50, 180, 240, 0.15);
+            box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.95),
+                        0 0 0 1px rgba(40, 160, 240, 0.1) inset,
+                        0 0 70px rgba(0, 140, 230, 0.2);
+            padding: 3rem 2.8rem;
+        }
+
+        h1 {
+            font-size: 4.4rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff, #90d0ff, #b0e0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 25px rgba(0, 160, 250, 0.6);
+        }
+
+        .subhead {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: rgba(100, 180, 250, 0.55);
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(50, 170, 250, 0.15);
+            padding-bottom: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .age-chip {
+            background: rgba(30, 140, 230, 0.08);
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            border: 1px solid rgba(50, 170, 250, 0.25);
+            color: #90c8ff;
+            letter-spacing: 0.1em;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0 2rem 0;
+            border-bottom: 1px solid rgba(50, 170, 250, 0.15);
+            padding-bottom: 0.8rem;
+        }
+
+        .tab {
+            font-size: 1.3rem;
+            font-weight: 350;
+            color: rgba(150, 200, 255, 0.5);
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: none;
+            background: none;
+            padding: 0.3rem 0;
+        }
+
+        .tab.active {
+            color: #ffffff;
+            border-bottom: 2px solid #40b0ff;
+            text-shadow: 0 0 15px #40b0ff;
+            font-weight: 400;
+        }
+
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        /* Билеты (старый дизайн, но затемнён) */
+        .tour-list {
+            list-style: none;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .tour-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.8rem;
+            margin: 0.8rem 0;
+            border-radius: 40px;
+            background: rgba(8, 16, 28, 0.6);
+            border: 1px solid rgba(50, 160, 240, 0.15);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .tour-item:hover {
+            background: rgba(15, 30, 48, 0.8);
+            border-color: rgba(70, 180, 255, 0.3);
+            box-shadow: 0 5px 25px rgba(0, 140, 250, 0.2);
+        }
+
+        .tour-info {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.8rem;
+        }
+
+        .date {
+            font-weight: 500;
+            min-width: 100px;
+            color: #fff;
+            text-shadow: 0 0 8px rgba(60, 180, 255, 0.5);
+            font-size: 1.15rem;
+        }
+
+        .city {
+            font-weight: 350;
+            color: rgba(190, 225, 255, 0.9);
+            font-size: 1.15rem;
+        }
+
+        .city.tba {
+            color: rgba(100, 150, 210, 0.5);
+            font-style: italic;
+        }
+
+        .ticket-btn {
+            background: rgba(40, 140, 240, 0.1);
+            border: 1px solid rgba(60, 170, 255, 0.25);
+            border-radius: 50px;
+            padding: 0.6rem 1.8rem;
+            color: #b0e0ff;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 400;
+        }
+
+        .tour-item:not(.tba-item) .ticket-btn:hover {
+            background: rgba(40, 150, 255, 0.25);
+            border-color: rgba(70, 180, 255, 0.8);
+            box-shadow: 0 0 25px rgba(0, 150, 255, 0.4);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .tba-item .ticket-btn {
+            background: rgba(20, 30, 45, 0.4);
+            border-color: rgba(60, 120, 180, 0.1);
+            color: rgba(150, 190, 240, 0.2);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Треклист (более тёмный) */
+        .tracklist {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 0.9rem 1.5rem;
+            margin: 0.7rem 0;
+            border-radius: 50px;
+            background: rgba(8, 16, 28, 0.6);
+            border: 1px solid rgba(40, 150, 240, 0.12);
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+        }
+
+        .track-item:hover {
+            background: rgba(12, 26, 42, 0.8);
+            border-color: rgba(60, 170, 255, 0.25);
+            transform: translateX(6px);
+        }
+
+        .cover {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 1px solid rgba(50, 160, 250, 0.3);
+            box-shadow: 0 0 18px rgba(0, 140, 240, 0.2);
+        }
+
+        .track-info {
+            flex: 1;
+        }
+
+        .track-title {
+            font-size: 1.2rem;
+            font-weight: 450;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .track-feat {
+            font-size: 0.8rem;
+            color: #70b0f0;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .more-tracks {
+            text-align: right;
+            color: rgba(100, 170, 250, 0.5);
+            font-size: 0.95rem;
+            letter-spacing: 0.15em;
+            margin-top: 1rem;
+            padding-right: 0.5rem;
+            border-top: 1px dashed rgba(60, 160, 250, 0.2);
+            padding-top: 1.2rem;
+        }
+
+        /* Кнопка */
+        .glass-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 2.5rem;
+            background: rgba(30, 130, 240, 0.1);
+            border: 1px solid rgba(50, 160, 250, 0.25);
+            border-radius: 60px;
+            color: #e0f0ff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.12em;
+            transition: 0.3s;
+            margin-top: 2rem;
+        }
+
+        .glass-button:hover {
+            background: rgba(40, 150, 255, 0.2);
+            border-color: rgba(70, 180, 255, 0.7);
+            box-shadow: 0 0 20px rgba(0, 140, 250, 0.4);
+        }
+
+        .footer-note {
+            margin-top: 2.8rem;
+            display: flex;
+            justify-content: space-between;
+            color: rgba(80, 140, 210, 0.4);
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(40, 130, 230, 0.15);
+            padding-top: 1.8rem;
+        }
+
+        .small-note {
+            color: rgba(40, 120, 210, 0.25);
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+
+        @media (max-width: 700px) {
+            .glass-card { padding: 2rem 1.2rem; }
+            h1 { font-size: 3rem; }
+            .tour-item, .track-item { flex-direction: column; align-items: flex-start; }
+            .ticket-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <!-- Шапка -->
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+                <h1>MCVODOLAZZZ</h1>
+                <span class="age-chip">6+</span>
+            </div>
+            <div class="subhead">
+                <span>worldwide · EP announcement</span>
+                <span>✦ 2025</span>
+            </div>
+
+            <!-- Вкладки: TICKETS / TRACKS (по умолчанию активна TICKETS) -->
+            <div class="tabs">
+                <button class="tab active" id="tabTickets" onclick="switchTab('tickets')">✦ tickets</button>
+                <button class="tab" id="tabTracks" onclick="switchTab('tracks')">✦ tracks</button>
+            </div>
+
+            <!-- Панель TICKETS (активна по умолчанию) -->
+            <div id="panelTickets" class="panel active">
+                <h2 style="color:white; font-weight:400; margin-bottom:1.5rem;">▼ dates / buy</h2>
+                <ul class="tour-list">
+                    <!-- Омск -->
+                    <li class="tour-item" data-city="Omsk" data-date="01.02">
+                        <div class="tour-info">
+                            <span class="date">01.02</span>
+                            <span class="city">Russia, Omsk</span>
+                        </div>
+                        <div class="ticket-btn" onclick="openTicketModal('Omsk', '01.02')">
+                            <span>🎫</span> Buy tickets
+                        </div>
+                    </li>
+                    <!-- Ереван -->
+                    <li class="tour-item" data-city="Yerevan" data-date="20.02">
+                        <div class="tour-info">
+                            <span class="date">20.02</span>
+                            <span class="city">Armenia, Yerevan</span>
+                        </div>
+                        <div class="ticket-btn" onclick="openTicketModal('Yerevan', '20.02')">
+                            <span>🎫</span> Buy tickets
+                        </div>
+                    </li>
+                    <!-- TBA 1 -->
+                    <li class="tour-item tba-item">
+                        <div class="tour-info">
+                            <span class="date">TBA</span>
+                            <span class="city tba">to be announced</span>
+                        </div>
+                        <div class="ticket-btn">
+                            <span>🔒</span> unavailable
+                        </div>
+                    </li>
+                    <!-- Краснодар -->
+                    <li class="tour-item" data-city="Krasnodar" data-date="01.03">
+                        <div class="tour-info">
+                            <span class="date">01.03</span>
+                            <span class="city">Russia, Krasnodar</span>
+                        </div>
+                        <div class="ticket-btn" onclick="openTicketModal('Krasnodar', '01.03')">
+                            <span>🎫</span> Buy tickets
+                        </div>
+                    </li>
+                    <!-- TBA 2 -->
+                    <li class="tour-item tba-item">
+                        <div class="tour-info">
+                            <span class="date">TBA</span>
+                            <span class="city tba">to be announced</span>
+                        </div>
+                        <div class="ticket-btn">
+                            <span>🔒</span> unavailable
+                        </div>
+                    </li>
+                    </li>
+                    <!-- TBA 2 -->
+                    <li class="tour-item tba-item">
+                        <div class="tour-info">
+                            <span class="date">TBA</span>
+                            <span class="city tba">Little  St. James</span>
+                        </div>
+                        <div class="ticket-btn">
+                            <span>🔒</span> unavailable
+                        </div>
+                    </li>
+                </ul>
+                <!-- Ссылка на genius (дублируется для удобства) -->
+                <a href="https://genius.com/artists/Mcvodolazzz" target="_blank" class="glass-button">↳ lyrics / genius</a>
+            </div>
+
+            <!-- Панель TRACKS -->
+            <div id="panelTracks" class="panel">
+                <h2 style="color:white; font-weight:400; margin-bottom:1rem;">▼ треклист</h2>
+                <ul class="tracklist">
+                    <!-- Мистер Vodolazzz -->
+                    <li class="track-item">
+                        <img class="cover" src="https://images.genius.com/ce09c38e97018c8b7fc97e2ca32824bb.736x736x1.png" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=MV'">
+                        <div class="track-info">
+                            <div class="track-title">Мистер Vodolazzz</div>
+                            <div class="track-feat"></div>
+                        </div>
+                    </li>
+                    <!-- Марка убили(грстн) -->
+                    <li class="track-item">
+                        <img class="cover" src="https://images.genius.com/ceb9c3b78911b9230b6e1c2ccd6c5a7c.1000x1000x1.png" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=MU'">
+                        <div class="track-info">
+                            <div class="track-title">Марка убили(грстн)</div>
+                            <div class="track-feat"></div>
+                        </div>
+                    </li>
+                    <!-- Triple Z -->
+                    <li class="track-item">
+                        <img class="cover" src="https://avatars.mds.yandex.net/get-shedevrum/12423216/img_e206484522f911efa3ef8a54364f94d5/orig" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=ZZZ'">
+                        <div class="track-info">
+                            <div class="track-title">Triple Z</div>
+                            <div class="track-feat"></div>
+                        </div>
+                    </li>
+                    <!-- (к)анал (ft. McPeazDah) -->
+                    <li class="track-item">
+                        <img class="cover" src="https://images.genius.com/ceb9c3b78911b9230b6e1c2ccd6c5a7c.1000x1000x1.png" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=K'">
+                        <div class="track-info">
+                            <div class="track-title">(к)анал</div>
+                            <div class="track-feat">ft. McPeazDah</div>
+                        </div>
+                    </li>
+                    <!-- КЛОУН (ft. Ih*** & McPeazDah) цензура имени -->
+                    <li class="track-item">
+                        <img class="cover" src="https://avatars.mds.yandex.net/get-shedevrum/12423216/img_e206484522f911efa3ef8a54364f94d5/orig" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=CLOWN'">
+                        <div class="track-info">
+                            <div class="track-title">КЛОУН</div>
+                            <div class="track-feat">ft. Ih*** & McPeazDah</div>
+                        </div>
+                    </li>
+                    <!-- #водолазфитлера -->
+                    <li class="track-item">
+                        <img class="cover" src="https://avatars.mds.yandex.net/get-shedevrum/12423216/img_e206484522f911efa3ef8a54364f94d5/orig" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=#'">
+                        <div class="track-info">
+                            <div class="track-title">#водолазфитлера</div>
+                            <div class="track-feat"></div>
+                        </div>
+                    </li>
+                    <!-- ПереZOVOZ -->
+                    <li class="track-item">
+                        <img class="cover" src="https://avatars.mds.yandex.net/get-shedevrum/12423216/img_e206484522f911efa3ef8a54364f94d5/orig" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=PZ'">
+                        <div class="track-info">
+                            <div class="track-title">ПереZOVOZ</div>
+                            <div class="track-feat"></div>
+                        </div>
+                    </li>
+                    <!-- FREEBITS -->
+                    <li class="track-item">
+                        <img class="cover" src="https://images.genius.com/c8c0b0203208f208eb469fe3843841f8.640x640x1.png" alt="cover" onerror="this.src='https://via.placeholder.com/52x52/0a1428/40a0ff?text=FB'">
+                        <div class="track-info">
+                            <div class="track-title">FREEBITS</div>
+                            <div class="track-feat"></div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- Строка "and more . . ." -->
+                <div class="more-tracks">and more . . .</div>
+
+                <a href="https://genius.com/artists/Mcvodolazzz" target="_blank" class="glass-button">↳ genius lyrics</a>
+            </div>
+
+            <!-- Подвал -->
+            <div class="footer-note">
+                <span>© MCVODOLAZZZ</span>
+                <span>6+</span>
+            </div>
+        </div>
+        <div class="small-note">liquid glass · worldwide · tickets / tracks</div>
+    </div>
+
+    <!-- Модальное окно для билетов (как было) -->
+    <div class="modal-overlay" id="ticketModal" onclick="if(event.target === this) closeModal()" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; z-index:1000; opacity:0; visibility:hidden; transition:all 0.3s;">
+        <div class="modal-content" style="background:rgba(8,16,30,0.95); backdrop-filter:blur(25px); border:1px solid rgba(50,160,250,0.3); border-radius:50px; padding:2.5rem; max-width:450px; width:90%; box-shadow:0 30px 60px rgba(0,0,0,0.7); transform:scale(0.9); transition:transform 0.3s;">
+            <div class="modal-city" id="modalCityDisplay" style="text-align:center; color:#80c0ff; font-size:1rem; margin-bottom:0.5rem;"></div>
+            <div class="modal-title" style="font-size:2.2rem; background:linear-gradient(135deg,#fff,#90d0ff); -webkit-background-clip:text; background-clip:text; color:transparent; text-align:center; margin-bottom:1.5rem;">sold out</div>
+            <div class="ticket-options" style="display:flex; flex-direction:column; gap:1rem; margin:2rem 0;">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 1.8rem; background:rgba(30,100,200,0.1); border:1px solid rgba(50,160,250,0.2); border-radius:40px; color:white;">
+                    <span>Dance floor</span><span style="color:#ff8a8a;">✕ sold out</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 1.8rem; background:rgba(30,100,200,0.1); border:1px solid rgba(50,160,250,0.2); border-radius:40px; color:white;">
+                    <span>FAN</span><span style="color:#ff8a8a;">✕ sold out</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 1.8rem; background:rgba(30,100,200,0.1); border:1px solid rgba(50,160,250,0.2); border-radius:40px; color:white;">
+                    <span>VIP</span><span style="color:#ff8a8a;">✕ sold out</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 1.8rem; background:rgba(30,100,200,0.1); border:1px solid rgba(50,160,250,0.2); border-radius:40px; color:white;">
+                    <span>Meet & Greet</span><span style="color:#ff8a8a;">✕ sold out</span>
+                </div>
+            </div>
+            <button onclick="closeModal()" style="background:rgba(40,140,240,0.15); border:1px solid rgba(50,160,250,0.3); border-radius:50px; padding:1rem; width:100%; color:white; font-size:1rem; cursor:pointer; transition:0.3s;">close</button>
+        </div>
+    </div>
+
+    <script>
+        // Переключение вкладок
+        function switchTab(tabId) {
+            const panelTickets = document.getElementById('panelTickets');
+            const panelTracks = document.getElementById('panelTracks');
+            const tabTickets = document.getElementById('tabTickets');
+            const tabTracks = document.getElementById('tabTracks');
+
+            if (tabId === 'tickets') {
+                panelTickets.classList.add('active');
+                panelTracks.classList.remove('active');
+                tabTickets.classList.add('active');
+                tabTracks.classList.remove('active');
+            } else {
+                panelTracks.classList.add('active');
+                panelTickets.classList.remove('active');
+                tabTracks.classList.add('active');
+                tabTickets.classList.remove('active');
+            }
+        }
+
+        // Модальное окно билетов
+        const modal = document.getElementById('ticketModal');
+        const modalCity = document.getElementById('modalCityDisplay');
+
+        function openTicketModal(city, date) {
+            modalCity.textContent = `${date} · ${city}`;
+            modal.style.opacity = '1';
+            modal.style.visibility = 'visible';
+            modal.querySelector('.modal-content').style.transform = 'scale(1)';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.opacity = '0';
+            modal.style.visibility = 'hidden';
+            modal.querySelector('.modal-content').style.transform = 'scale(0.9)';
+            document.body.style.overflow = '';
+        }
+
+        // Закрытие по Esc
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.visibility === 'visible') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
