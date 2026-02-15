@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCVODOLAZZZ · WORLDWIDE TOUR</title>
+    <!-- Минималистичный стиль и базовый сброс -->
+    <style>
+        /* Сброс отступов и базовые настройки */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;  /* очень светлый серый фон */
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #111;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            border: 1px solid #eaeaea;
+            padding: 3rem 2.5rem;
+        }
+
+        /* Типографика */
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            word-break: break-word;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #888;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1.5rem;
+        }
+
+        .age-restriction {
+            display: inline-block;
+            border: 1px solid #aaa;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: #555;
+            margin-top: 0.2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 450;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: -0.01em;
+        }
+
+        /* Таблица/список городов */
+        .tour-list {
+            list-style: none;
+            margin: 1.5rem 0 2rem 0;
+        }
+
+        .tour-list li {
+            display: flex;
+            align-items: baseline;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #ddd;
+            font-size: 1.1rem;
+        }
+
+        .tour-list li:last-child {
+            border-bottom: none;
+        }
+
+        .date {
+            font-weight: 500;
+            min-width: 120px;
+            color: #000;
+        }
+
+        .city {
+            font-weight: 350;
+            color: #333;
+            margin-left: 1rem;
+        }
+
+        .tba {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* ссылка на тексты */
+        .lyrics-link {
+            margin: 2.5rem 0 1.8rem 0;
+        }
+
+        .lyrics-link a {
+            color: #000;
+            text-decoration: none;
+            font-size: 1rem;
+            border-bottom: 1px solid #000;
+            padding-bottom: 2px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: opacity 0.2s;
+        }
+
+        .lyrics-link a:hover {
+            opacity: 0.5;
+        }
+
+        /* Футер с возрастом и дисклеймером */
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #aaa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
+        }
+
+        /* Адаптация для экранов < 500px */
+        @media (max-width: 500px) {
+            .container {
+                padding: 2rem 1.2rem;
+            }
+            h1 {
+                font-size: 2.4rem;
+            }
+            .tour-list li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.2rem;
+            }
+            .date {
+                min-width: auto;
+            }
+            .city {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Хедер с именем и возрастным цензом -->
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+            <h1>MCVODOLAZZZ</h1>
+            <span class="age-restriction">6+</span>
+        </div>
+        <div class="subhead">worldwide tour</div>
+
+        <!-- Основной блок с датами -->
+        <h2>Dates</h2>
+        <ul class="tour-list">
+            <li>
+                <span class="date">01.02</span>
+                <span class="city">Russia, Omsk</span>
+            </li>
+            <li>
+                <span class="date">20.02</span>
+                <span class="city">Armenia, Yerevan</span>
+            </li>
+            <li>
+                <span class="date">TBA</span>
+                <span class="city tba">to be announced</span>
+            </li>
+            <li>
+                <span class="date">01.03</span>
+                <span class="city">Russia, Krasnodar</span>
+            </li>
+            <li>
+                <span class="date">TBA</span>
+                <span class="city tba">to be announced</span>
+            </li>
+        </ul>
+
+        <!-- Ссылка на тексты песен (Genius) -->
+        <div class="lyrics-link">
+            <a href="https://genius.com/artists/Mcvodolazzz" target="_blank" rel="noopener noreferrer">
+                ↳ lyrics / genius
+            </a>
+        </div>
+
+        <!-- Нижняя часть с дополнительной информацией -->
+        <div class="footer-note">
+            <span>© MCVODOLAZZZ</span>
+            <span>ages 6+</span>
+        </div>
+    </div>
+
+    <!-- Очень легкий "воздух" внизу (опционально) -->
+    <div style="margin-top: 0.5rem; font-size: 0.7rem; color: #ccc; text-align: center;">
+        more dates to be announced
+    </div>
+</body>
+</html>
