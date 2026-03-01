@@ -1,0 +1,10 @@
+.file-item.corrupted:nth-of-type(9),
+.file-item.corrupted:nth-of-type(10),
+.file-item.corrupted:nth-of-type(11) {
+    animation: pulse-glitch 3s infinite;
+}
+
+@keyframes pulse-glitch {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.3; }
+}
